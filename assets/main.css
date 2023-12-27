@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Secular One');
+body {
+    background-color: #151515;
+    overflow-x: hidden;
+}
+html {
+    scroll-behavior: smooth;
+}
+header h2 {
+    font-family: "Secular One";
+    color: #FAEED1;
+    font-size: x-large;
+}
+header {
+    margin: 2vh 3vh 2vh 3vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+header div {
+    display: flex;
+    align-items: center;
+}
+header svg {
+    width: 10vh;
+    height: 10vh;
+}
+.ButtonTrigger {
+    background-color: #4c4a45;
+    padding: 1vh;
+    border-radius: 3vh;
+    color: #FAEED1;
+    display: flex;
+    font-family: "Lato";
+}
+.ButtonTrigger a {
+    padding: .3vh 2vh .3vh 2vh;
+    border-radius: 2vh;
+    transition: background-color 0.3s, color 0.3s, padding 0.3s;
+}
+
+.ButtonTrigger a:hover {
+    background-color: #FAEED1;
+    color: black;
+    border-radius: 2vh;
+    padding: .3vh 3vh .3vh 3vh;
+}
+header section {   
+    position: absolute;
+    opacity: 0.08;
+    transform: rotate(28.35deg);
+    left: -52vh;
+    top: -11vh;
+    z-index: -999;
+}
+.bg {
+    position: absolute;
+    opacity: 0.08;
+    transform: rotate(344deg);
+    left: 6vh;
+    top: 6vh;
+}
+.mainSec {
+    color: #FAEED1;
+    font-family: "Secular One";
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+.DescContainer {
+    position: relative;
+    margin: 5vh;
+}
+.imageContainer {
+    position: relative;
+    right: 10vh;
+    top: 10vh;
+    margin: 3vh;
+    width: auto;
+    height: auto;
+}
+.DescContainer h2 {
+    font-size: 14vh;
+    white-space: nowrap;
+}
+.DescContainer p {
+    font-size: 3vh;
+}
+.imageContainer img {
+    max-width: 80vh;
+    width: 100vh;
+    height: auto;
+    object-fit: cover;
+}
+.features {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    margin: 5vh;
+    align-items: center;
+}
+.card h1 {
+    color: #FAEED1;
+    font-size: x-large;
+    font-weight: 500;
+    font-family: 'Secular One';
+}
+.card p {
+    color: white;
+    font-size: medium;
+    font-weight: 200;
+    font-family: 'Lato';
+}
+.our-mission h1 {
+    color: #FAEED1;
+    font-size: xxx-large;
+    font-family: 'Secular One';
+}
+.our-mission {
+    text-align: center;
+    margin: 10vh;
+    position: relative;
+}
+.our-mission h3 {
+    color: white;
+    font-size: 5.5vh;
+    font-family: "Lato";
+}
+.our-mission section {
+    position: absolute;
+    opacity: 0.08;
+    top: 3vh;
+    transform: rotate(21deg);
+    left: -13vh;
+}
+.join-us h1 {
+    color: #FAEED1;
+    font-size: xxx-large;
+    font-family: 'Secular One';
+}
+.join-us {
+    text-align: center;
+    margin: 2vh;
+}
+.join-us h2 {
+    color: white;
+    font-size: xx-large;
+    font-family: "Lato";
+}
+.join-us a {
+    font-family: 'Secular One';
+    background: #FAEED1;
+    border-radius: 2vh;
+    padding: 0.8vh 2vh .8vh 2vh;
+    font-size: larger;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 2vh;
+}
+.our-mission div {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}
+.our-mission div img {
+    width: 37vh;
+}
+.footer {
+    text-align: center;
+}
+.footer div div {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    color: #FAEED1;
+    font-family: "Secular One";
+}
+.footer div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: stretch;
+}
+.footer h2 {
+    font-size: xx-large;
+    color: white;
+    font-family: 'Lato';
+}
+footer {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+}
+footer div {
+    display: inline-flex;
+    fill: white;
+    flex-direction: row;
+    margin: 0vh 1vh 0vh 1vh;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+footer div a {
+    margin: 0vh 1vh 0vh 1vh;
+}
+footer div svg {
+    fill:white;
+}
+.Chaticon {
+    width: 14vh;
+    height: 14vh;
+    border: 1.5px solid #FAEED1;
+    border-radius: 50%;
+    padding: 1vh;
+    background: #272624;
+}
+.mainChat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: relative;
+    top: 12vh;
+    color: white;
+    font-family: 'Secular One';
+}
+.prompt {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+.prompt input {
+    width: 100%;
+    border: 1.5px solid #515151;
+    background: #151515;
+    border-radius: 1vh;
+    margin: 1vh;
+    padding: 1vh;
+    color: white;
+}
+.prompt svg {
+    margin: 3vh 3vh 3vh 2vh;
+}
+.UserMessage img {
+    width: 7vh;
+    border-radius: 50%;
+    margin: 0vh 1vh 0vh 1vh;
+}
+.UserMessage p {
+    background: #dbdbdb;
+    padding: 2vh;
+    border-radius: 2vh;
+    max-width: 90vh;
+}
+.UserMessage {
+    order: 1;
+    margin-left: auto;
+    float: right;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    margin: 1vh;
+    align-items: flex-start;
+    align-self: flex-end;
+}
+.BotMessage {
+    order: 1;
+    margin-left: auto;
+    float: right;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    margin: 1vh;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+.BotImage {
+    width: 8vh;
+    height: 8vh;
+    margin: 0vh 2vh 0vh 1vh;
+    border: 1.5px solid #FAEED1;
+    border-radius: 50%;
+    padding: 1vh;
+    background: #272624;
+}
+.BotMessage img {
+    width: 7vh;
+    border-radius: 50%;
+    margin: 0vh 1vh 0vh 1vh;
+}
+.BotMessage p {
+    background: #494949;
+    padding: 2vh;
+    border-radius: 2vh;
+    max-width: 90vh;
+}
+.disabled {
+    cursor: not-allowed;
+    opacity: 0.1;
+}
+.convo {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    max-width: 100%;
+    max-height: 80vh;
+    margin: 1vh;
+    position: relative;
+    top: -1vh;
+}
+::-webkit-scrollbar {
+    display: none;
+  }
