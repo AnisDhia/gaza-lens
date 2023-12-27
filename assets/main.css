@@ -264,6 +264,7 @@ footer div svg {
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    padding: .5vh;
 }
 .prompt input {
     width: 100%;
@@ -275,7 +276,7 @@ footer div svg {
     color: white;
 }
 .prompt svg {
-    margin: 3vh 3vh 3vh 2vh;
+    margin: 3vh 3vh 3vh 4vh;
 }
 .UserMessage img {
     width: 7vh;
@@ -289,6 +290,30 @@ footer div svg {
     max-width: 90vh;
 }
 .UserMessage {
+    order: 1;
+    margin-left: auto;
+    float: right;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    margin: 1vh;
+    align-items: flex-start;
+    align-self: flex-end;
+}
+.UserImage img {
+    width: 7vh;
+    border-radius: 50%;
+    margin: 0vh 1vh 0vh 1vh;
+}
+.UserImage p img {
+    background: #dbdbdb;
+    padding: 1vh;
+    border-radius: 2vh;
+    width: 60vh;
+}
+.UserImage {
     order: 1;
     margin-left: auto;
     float: right;
@@ -347,8 +372,31 @@ footer div svg {
     max-height: 80vh;
     margin: 1vh;
     position: relative;
-    top: -1vh;
+    top: -2vh;
 }
 ::-webkit-scrollbar {
     display: none;
+  }
+.prompt svg {
+    cursor: pointer;
+}
+.TypewritingEffect {
+    max-width: 80%;
+    text-align: center;
+}
+@media only screen and (max-width: 767px) {
+    header {
+        margin: 0;
+    }
+    .BotMessage p {
+        max-width: 33vh;
+        font-size: small;
+    }
+    .UserMessage p {
+        max-width: 70vh;
+        font-size: small;
+    }
+    .convo {
+        margin: 0;
+    }
   }

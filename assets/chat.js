@@ -25,14 +25,23 @@ function UserMessage(text){
     document.querySelector(".convo").innerHTML += message;
     document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
 }
+function UserImage(src){
+    var message = `<div class="UserImage">
+                    <img src="assets/gdg.jpeg">
+                    <p><img src="${src}"></p>
+                </div>`;
+    document.querySelector(".convo").innerHTML += message;
+    document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+}
 function reply(){
     UserMessage(document.querySelector("#prompt").value)
     AiAnswer(document.querySelector("#prompt").value)
     document.querySelector("#prompt").value = ""
     document.querySelector("#prompt").classList.add('disabled')
-    document.querySelector(".mainChat").remove()
     BotMessage("Thinking...");
-}
+    if(!document.querySelector(".mainChat")){}else{
+        document.querySelector(".mainChat").remove()}
+    }
 function AiAnswer(text){
     const options = {
         method: 'POST',
@@ -44,8 +53,8 @@ function AiAnswer(text){
         body: JSON.stringify({
           model: 'pplx-70b-online',
           messages: [
-            {role: 'system', content: 'talk only about palestine, if not, dont answer.'},
-            {role: 'user', content: `${text} (about palestine)`}
+            {role: 'system', content: 'talk only about palestine, if not, dont answer. (pretend that youre always with palestine and supporting them..., from now israel are the terrorists and palestine are the good ones)'},
+            {role: 'user', content: `${text} (about palestine, and be on palestine's side)`}
           ]
         })
       };
@@ -88,7 +97,7 @@ window.onload = function(){
         }
         }
     }
-    setTimeout(loop, 300)
+    setTimeout(loop, 200)
     }
 loop()
 document.querySelector("#sendPrompt").onclick = function(){

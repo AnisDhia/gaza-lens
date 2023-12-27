@@ -10,6 +10,60 @@
 </head>
 <h1 id="test"></h1>
 <body style="overflow: hidden;">
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+<script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+const genAI = new GoogleGenerativeAI("AIzaSyAXDAfPcqQWPq5qPR3hmZ5Juj_3kEp7I3o");
+async function fileToGenerativePart(file) {
+  const base64EncodedDataPromise = new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result.split(',')[1]);
+    reader.readAsDataURL(file);
+  });
+  return {
+    inlineData: { data: await base64EncodedDataPromise, mimeType: file.type },
+  };
+}
+async function run() {
+    console.log("working...");
+  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+  const prompt = "give me a detailed story telling about this (its about palestine)";
+  const fileInputEl = document.querySelector("input[type=file]");
+  const imageParts = await Promise.all(
+    [...fileInputEl.files].map(fileToGenerativePart)
+  );
+  const result = await model.generateContent([prompt, ...imageParts]);
+  const response = await result.response;
+  const text = response.text();
+  BotMessage(text);
+  document.querySelector("#prompt").classList.remove('disabled')
+  document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+}
+document.querySelector("input[type=file]").onchange = function(event){
+    const selectedFile = event.target.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64Link = e.target.result;
+          UserImage(base64Link);
+          BotMessage("Thinking...");
+          document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+        };
+        reader.readAsDataURL(selectedFile);
+    }
+    document.querySelector("#prompt").value = ""
+    document.querySelector("#prompt").classList.add('disabled')
+    if(!document.querySelector(".mainChat")){}else{
+    document.querySelector(".mainChat").remove()}
+    run()
+}
+</script>
     <header>
         <div>
         <svg width="36" height="47" viewBox="0 0 36 47" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -48,8 +102,12 @@
     <section class="convo">
     </section>
     <section class="prompt">
+        <input type="file" id="fileInput" style="display: none;">
+        <label for="fileInput" id="fileInputLabel">
+            <svg fill="#FAEED1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 14.378l-5.641 5.64c-.654.655-1.513.982-2.374.982-2.972 0-4.493-3.613-2.374-5.731l5.539-5.54c.488-.486 1.126-.729 1.766-.729 1.494 0 2.498 1.233 2.498 2.519 0 .61-.227 1.232-.734 1.74l-4.918 4.918c-.634.634-1.665.634-2.299 0-.633-.633-.633-1.664 0-2.298l3.971-3.97.828.828-3.971 3.97c-.178.177-.178.466 0 .643s.465.177.643 0l4.919-4.918c.517-.517.517-1.357 0-1.874-.517-.517-1.356-.517-1.874 0l-5.539 5.54c-.854.853-.854 2.241 0 3.093.852.853 2.24.853 3.093 0l5.64-5.64.827.827zm-17-5.878c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5zm7.57 3.013l-1.57-2.513-2.52 4-2.48-1.96-4 5.96h6.694c.144-1.139.63-2.242 1.503-3.114l2.373-2.373zm-3.754 7.487h-8.816v-14h18v2.126c.299-.062.604-.096.916-.096.371 0 .732.06 1.084.147v-4.177h-22v18h11.818c-.482-.605-.818-1.283-1.002-2z"/></svg>
+        </label>
         <input id="prompt" placeholder="Your prompt goes here" type="text">
-        <a id="sendPrompt" href="#"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#FAEED1" viewBox="0 0 16 16" enable-background="new 0 0 16 16">
+        <a id="sendPrompt" href="#"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#FAEED1" viewBox="0 0 16 16" enable-background="new 0 0 16 16">
             <path d="M0,9l4,1.5L6,16l2.861-3.82L14,14l2-14L0,9z M7.169,11.44l-0.916,2.485l-1.086-3.118l8.402-7.631L7.169,11.44z"/>
            </svg></a>
     </section>
