@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Secular One');
+body {
+    background-color: #151515;
+    overflow: hidden;
+    margin: 3vh;
+}
+header h2 {
+    font-family: "Secular One";
+    color: #FAEED1;
+    font-size: x-large;
+}
+header {
+    margin: 2vh 3vh 2vh 3vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+header div {
+    display: flex;
+    align-items: center;
+}
+header svg {
+    width: 10vh;
+    height: 10vh;
+}
+header section {   
+    position: absolute;
+    opacity: 0.08;
+    transform: rotate(28.35deg);
+    left: -52vh;
+    top: -11vh;
+    z-index: -999;
+}
+.wrapper {
+    background: none;
+    padding: 2rem;
+    border-radius: 15px;
+}
+.container {
+    font-family: "Lato";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+    padding: 3rem 0;
+    background: none;
+}
+.ButtonTrigger {
+    background-color: #4c4a45;
+    padding: 1vh;
+    border-radius: 3vh;
+    color: #FAEED1;
+    display: flex;
+    font-family: "Lato";
+}
+.ButtonTrigger a {
+    padding: .3vh 2vh .3vh 2vh;
+    border-radius: 2vh;
+    transition: background-color 0.3s, color 0.3s, padding 0.3s;
+}
+
+.ButtonTrigger a:hover {
+    background-color: #FAEED1;
+    color: black;
+    border-radius: 2vh;
+    padding: .3vh 3vh .3vh 3vh;
+}
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: -99;
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+        ul,
+        li {
+            list-style: none;
+            padding: 0;
+        }
+        h1 {
+            font-size: 1.1rem;
+            color: white;
+            font-family: sans-serif;
+        }
+
+        .sessions {
+            margin-top: 2rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        li {
+            padding-bottom: 1.5rem;
+            border-left: 1px solid white;
+            position: relative;
+            padding-left: 20px;
+            margin-left: 10px;
+
+            &:last-child {
+                border: 0px;
+                padding-bottom: 0;
+            }
+
+            &:before {
+                content: '';
+                width: 15px;
+                height: 15px;
+                background: white;
+                border: 1px solid #4e5ed3;
+                box-shadow: 3px 3px 0px white;
+                box-shadow: 3px 3px 0px white;
+                border-radius: 50%;
+                position: absolute;
+                left: -10px;
+                top: 0px;
+            }
+        }
+
+        .time {
+            color: #858484;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+
+        }
+
+        p {
+            color: white;
+            font-family: sans-serif;
+            line-height: 1.5;
+            margin-top: 0.4rem;
+        }
