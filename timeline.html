@@ -15,17 +15,19 @@
             overflow: hidden;
             font-family: "Lato";
             scrollbar-width: none;
+            margin: 0;
+            background: #1a1a1a;
         }
         body::-webkit-scrollbar {
             display: none;
         }
         #map {
             position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            display: block;
+    top: -14vh;
+    right: 0vh;
+    width: 150vh;
+    height: 148vh;
+    display: block;
         }
         ul,
         li {
@@ -127,7 +129,9 @@
     </header>
     <div class="flex flex-row-reverse">
         <div class="w-4/6 relative" id="">
-            <div id="map"></div>
+            <div id="map">
+                <img src="assets/Figmap.jpg">
+            </div>
             <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
             <div class="absolute h-7 w-7 bg-white opacity-50 rounded-full" data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop" style="top: 66%; left: 38%; transform: translate(-50%, -50%);"></div>
@@ -188,15 +192,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var map = L.map('map').setView([31.947351, 35.227163], 10);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap contributors',
-        id: 'mapbox/dark-v10',
-        tileOptions: {crossOriginKeyword: null},
-        crossOriginKeyword: null
-    }).addTo(map);
-});
-</script>
 </html>
