@@ -58,24 +58,11 @@ function AiAnswer(text){
           ]
         })
       };
-      fetch('https://cors-anywhere.herokuapp.com/https://api.perplexity.ai/chat/completions', options)
+      fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.perplexity.ai/chat/completions')}`, options)
         .then(response => response.json())
         .then(response => BotMessage(response.choices[0].message.content))
     }
 window.onload = function(){
-    var iframe = document.querySelector("iframe");
-    iframe.onload = function() {
-        var iframeWindow = iframe.contentWindow;
-        var script = iframeWindow.document.createElement("script");
-        var scriptCode = `
-          (function() {
-            // Perform the desired action (e.g., click the submit button)
-            document.querySelector("input[type=submit]").click();
-          })();
-        `;
-        script.textContent = scriptCode;
-        iframeWindow.document.body.appendChild(script);
-      };
     const textDisplay = document.querySelector('#TypewritingEffect')
     const phrases = ['How is Palestine?', 'Give me the latest informations available about the Israel-Hamas conflict', 'What happened in 7th October 2023?', 'How did the conflict between palestine & israel started?']
     let i = 0
