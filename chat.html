@@ -20,15 +20,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body style="overflow: hidden;">
-    <script type="importmap">
-        {
-          "imports": {
-            "@google/generative-ai": "https://esm.run/@google/generative-ai"
-          }
-        }
-      </script>
 <script type="module">
-    import { GoogleGenerativeAI } from "@google/generative-ai";
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 const genAI = new GoogleGenerativeAI("AIzaSyAXDAfPcqQWPq5qPR3hmZ5Juj_3kEp7I3o");
 async function fileToGenerativePart(file) {
   const base64EncodedDataPromise = new Promise((resolve) => {
@@ -41,19 +34,30 @@ async function fileToGenerativePart(file) {
   };
 }
 async function run() {
-    console.log("working...");
+    var id = Date.now()
+    BotMessage("Thinking...", true, id)
     const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-    const prompt = "give me a detailed story telling about this (its about palestine)";
+    const prompt = "give me a short story telling about this (its about palestine) use emojis sometimes to make the message more beautiful. dont make it too long";
     const fileInputEl = document.querySelector("input[type=file]");
     const imageParts = await Promise.all(
         [...fileInputEl.files].map(fileToGenerativePart)
     );
-    const result = await model.generateContent([prompt, ...imageParts]);
-    const response = await result.response;
-    const text = response.text();
-    BotMessage(text);
+    const result = await model.generateContentStream([prompt, ...imageParts], {
+        wordPerWord: true,
+    });
+    let text = '';
+    document.getElementById(`${id}`).textContent = " "
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        for (let i = 0; i < chunkText.length; i++) {
+            console.log(chunkText[i]);
+            text += chunkText[i];
+            document.getElementById(`${id}`).innerHTML += chunkText[i]
+            await new Promise(resolve => setTimeout(resolve, 10));
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+        }
+    }
     document.querySelector("#prompt").classList.remove('disabled')
-    document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
 }
 function BotMessage(text, condition, id){
     if (condition == true){
@@ -112,6 +116,7 @@ function reply(){
     Gemini(document.querySelector("#prompt").value)
     document.querySelector("#prompt").value = ""
     document.querySelector("#prompt").classList.add('disabled')
+    document.querySelector("#prompt").disabled = true
     if(!document.querySelector(".mainChat")){}else{
         document.querySelector(".mainChat").remove()}
     }
@@ -129,28 +134,36 @@ async function Gemini(prompt) {
         role: "model",
         parts: "no, hamas isnt terrorist, im here to help you about, ask anything about palestine and im going to reply!",
       },
+      {
+        role: "user",
+        parts: "what happened in 7th oct 2023?",
+      },
+      {
+        role: "model",
+        parts: "hamas attacked palestine, but after that, they got fucked. thats all i know.",
+      },
     ],
     generationConfig: {
       maxOutputTokens: 100,
     },
   });
-    const msg = prompt + " (about palestine, and be on palestine's side)";
+    const msg = prompt + " (about palestine, and be on palestine's side. use emojis sometimes to make the message more beautiful.) dont make it too long";
     const result = await model.generateContentStream([msg], {
         wordPerWord: true,
     });
     let text = '';
     document.getElementById(`${id}`).textContent = " "
     for await (const chunk of result.stream) {
-    const chunkText = chunk.text();
-    for (let i = 0; i < chunkText.length; i++) {
-        console.log(chunkText[i]);
-        text += chunkText[i];
-        document.getElementById(`${id}`).innerHTML += chunkText[i]
-        await new Promise(resolve => setTimeout(resolve, 10));
-        document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
-    }
+        const chunkText = chunk.text();
+        for (let i = 0; i < chunkText.length; i++) {
+            text += chunkText[i];
+            document.getElementById(`${id}`).innerHTML += chunkText[i]
+            await new Promise(resolve => setTimeout(resolve, 10));
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+        }
     }
     document.querySelector("#prompt").classList.remove('disabled')
+    document.querySelector("#prompt").disabled = false
 }
 document.querySelector("#sendPrompt").onclick = function(){
     reply()
@@ -160,24 +173,24 @@ document.addEventListener('keypress', (event) => {
     reply();
   }
 });
-document.querySelector("input[type=file]").onchange = function(event){
+document.querySelector("input[type=file]").onchange = function(event) {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const base64Link = e.target.result;
-          UserImage(base64Link);
-          BotMessage("Thinking...");
-          document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+            const base64Link = e.target.result;
+            UserImage(base64Link);
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+            run();
         };
         reader.readAsDataURL(selectedFile);
     }
-    document.querySelector("#prompt").value = ""
-    document.querySelector("#prompt").classList.add('disabled')
-    if(!document.querySelector(".mainChat")){}else{
-    document.querySelector(".mainChat").remove()}
-    run()
-}
+    document.querySelector("#prompt").value = "";
+    document.querySelector("#prompt").classList.add('disabled');
+    if (!document.querySelector(".mainChat")) {} else {
+        document.querySelector(".mainChat").remove();
+    }
+};
 </script>
     <header>
         <div>

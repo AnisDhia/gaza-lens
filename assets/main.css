@@ -264,6 +264,7 @@ footer div svg {
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    height: 10vh;
     padding: .5vh;
     background-color: #151515;
 }
@@ -365,18 +366,20 @@ footer div svg {
     opacity: 0.1;
 }
 .convo {
-    overflow: auto;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
     max-width: 100%;
     max-height: 80vh;
+    overflow: auto;
     margin: 1vh;
     position: relative;
-    top: -2vh;
+    top: -4vh;
+    -webkit-mask: linear-gradient(to top, black 96%, transparent 100%),linear-gradient(to bottom, black 90%, transparent 100%);
+    -webkit-mask-composite: destination-in;
+    -webkit-mask-repeat: no-repeat;
 }
 ::-webkit-scrollbar {
-    display: none;
+    opacity: 0;
   }
 .prompt svg {
     cursor: pointer;
@@ -384,6 +387,10 @@ footer div svg {
 #TypewritingEffect {
     max-width: 80%;
     text-align: center;
+}
+.blurBar {
+    z-index: 1;
+    mask-image: linear-gradient(to top, black 10%, transparent 100%);
 }
 @media only screen and (max-width: 767px) {
     header {
@@ -399,7 +406,7 @@ footer div svg {
         margin: 0;
     }
     .BotMessage p {
-        max-width: 33vh;
+        max-width: 30vh;
         font-size: small;
     }
     .UserMessage p {
@@ -408,7 +415,7 @@ footer div svg {
     }
     .convo {
         margin: 0;
-        top: 0;
+        top: -2vh;
     }
     .UserImage p img {
         width: 30vh;
