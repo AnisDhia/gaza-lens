@@ -1,6 +1,6 @@
 # Gaza-Lens: AI Chat Bot for Truthful Descriptions and Storytelling
 
-[![Gaza-Lens](https://i.imgur.com/KCQnMa6.png)](https://devfest-batna-2023.netlify.app/chat)
+[![Gaza-Lens](https://i.imgur.com/Duom6xJ.png)](https://devfest-batna-2023.netlify.app/chat)
 
 ## Overview
 
