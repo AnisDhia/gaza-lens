@@ -4,7 +4,7 @@
 
 ## Overview
 
-Gaza-Lens is an AI-powered chat bot designed to provide truthful descriptions, image analysis, and storytelling related to Gaza. This project aims to shed light on the rich and diverse narratives of Gaza through the lens of artificial intelligence.
+Gaza-Lens is an AI-powered chat bot designed to provide truthful descriptions, image analysis, and storytelling related to Gaza. This project aims to shed light on the rich and diverse narratives of Gaza through the lens of artificial intelligence. See a [live demo](https://devfest-batna-2023.netlify.app)
 
 ## Features
 
@@ -21,6 +21,8 @@ Gaza-Lens is an AI-powered chat bot designed to provide truthful descriptions, i
 - [ ] Implement user authentication for personalized experiences.
 - [ ] Enhance image recognition capabilities to identify specific landmarks.
 - [ ] Use Llama AI API for chat.
+
+Figma Design by [@AnisDhia](https://github.com/AnisDhia/). Here's a [Figma Prototype](https://www.figma.com/file/27o2tBIlcyECHbDNFcJ7Al/Untitled?type=design&node-id=0-1&mode=design&t=rswujOad3oiJjxIk-0)
 
 Usage
 Visit the Gaza-Lens Website to interact with the chat bot and explore Gaza through AI storytelling.
