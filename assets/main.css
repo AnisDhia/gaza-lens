@@ -265,6 +265,7 @@ footer div svg {
     justify-content: center;
     width: 100%;
     padding: .5vh;
+    background-color: #151515;
 }
 .prompt input {
     width: 100%;
@@ -380,12 +381,21 @@ footer div svg {
 .prompt svg {
     cursor: pointer;
 }
-.TypewritingEffect {
+#TypewritingEffect {
     max-width: 80%;
     text-align: center;
 }
 @media only screen and (max-width: 767px) {
     header {
+        margin: 1vh;
+        justify-content: space-around;
+    }
+    :root {
+        --webkit-footer-gap: 80px;
+    }
+    html,
+    body {
+        padding: 0;
         margin: 0;
     }
     .BotMessage p {
@@ -398,5 +408,31 @@ footer div svg {
     }
     .convo {
         margin: 0;
+        top: 0;
+    }
+    .UserImage p img {
+        width: 30vh;
+        margin: 0vh 0vh 0vh 0vh;
+    }
+    .chat {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+    .BotImage, .UserMessage img {
+        width: 6vh;
+        height: 6vh;
+    }
+    .ButtonTrigger {
+        font-size: 14px;
+    }
+    .prompt {
+        height: 8vh;
     }
   }
+  @supports (-webkit-touch-callout: none) {
+    .convo {
+        padding-bottom: calc(var(--webkit-footer-gap) + 2%);
+    }
+}
