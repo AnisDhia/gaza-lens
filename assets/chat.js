@@ -58,7 +58,7 @@ function AiAnswer(text){
           ]
         })
       };
-      fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.perplexity.ai/chat/completions')}`, options)
+      fetch(`https://api.allorigins.win/get?url=https://api.perplexity.ai/chat/completions`, options)
         .then(response => response.json())
         .then(response => BotMessage(response.choices[0].message.content))
     }
