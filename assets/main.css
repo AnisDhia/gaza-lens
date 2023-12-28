@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Secular One');
 body {
     background-color: #151515;
+    user-select: none;
     overflow-x: hidden;
 }
 html {
@@ -374,7 +375,7 @@ footer div svg {
     margin: 1vh;
     position: relative;
     top: -4vh;
-    -webkit-mask: linear-gradient(to top, black 96%, transparent 100%),linear-gradient(to bottom, black 90%, transparent 100%);
+    -webkit-mask: linear-gradient(to top, black 96%, transparent 100%),linear-gradient(to bottom, black 99%, transparent 100%);
     -webkit-mask-composite: destination-in;
     -webkit-mask-repeat: no-repeat;
 }
