@@ -6,6 +6,9 @@ body {
     overflow: hidden;
     margin: 3vh;
 }
+::-webkit-scrollbar {
+    opacity: 0;
+}
 header h2 {
     font-family: "Secular One";
     color: #FAEED1;
@@ -32,9 +35,8 @@ header section {
     position: absolute;
     opacity: 0.08;
     transform: rotate(28.35deg);
-    left: -52vh;
-    top: -11vh;
-    z-index: -999;
+    left: -63vh;
+    top: -24vh;
 }
 .wrapper {
     background: none;

@@ -2,23 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="https://i.imgur.com/KCQnMa6.png" type="image/png">
     <title>Chat - Gaza Lens</title>
+    <meta name="description" content="Gaza-Lens: An AI Chat Bot for Truthful Descriptions and Storytelling about Gaza">
+    <meta property="og:title" content="Gaza-Lens - AI Chat Bot for Truthful Descriptions and Storytelling">
+    <meta property="og:description" content="Explore Gaza through the eyes of Gaza-Lens, an AI chat bot that tells truths about Gaza, describes images, and shares stories about meaningful pictures.">
+    <meta property="og:image" content="https://i.imgur.com/Duom6xJ.png">
+    <meta property="og:url" content="https://devfest-batna-2023.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Gaza-Lens DevFest 2023">
+    <meta name="keywords" content="Gaza, AI, Chat Bot, DevFest, Batna, Truth, Storytelling, Images">
+    <meta name="author" content="Moncef Guezzi">
     <link rel="stylesheet" href="assets/main.css">
     <script src="assets/chat.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<h1 id="test"></h1>
-<body style="overflow: hidden;">
-    <script type="importmap">
-        {
-          "imports": {
-            "@google/generative-ai": "https://esm.run/@google/generative-ai"
-          }
-        }
-      </script>
+<body style="overflow: hidden;" oncontextmenu="return false;">
 <script type="module">
-    import { GoogleGenerativeAI } from "@google/generative-ai";
+    import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 const genAI = new GoogleGenerativeAI("AIzaSyAXDAfPcqQWPq5qPR3hmZ5Juj_3kEp7I3o");
 async function fileToGenerativePart(file) {
   const base64EncodedDataPromise = new Promise((resolve) => {
@@ -31,38 +34,125 @@ async function fileToGenerativePart(file) {
   };
 }
 async function run() {
-    console.log("working...");
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-  const prompt = "give me a detailed story telling about this (its about palestine)";
-  const fileInputEl = document.querySelector("input[type=file]");
-  const imageParts = await Promise.all(
-    [...fileInputEl.files].map(fileToGenerativePart)
-  );
-  const result = await model.generateContent([prompt, ...imageParts]);
-  const response = await result.response;
-  const text = response.text();
-  BotMessage(text);
-  document.querySelector("#prompt").classList.remove('disabled')
-  document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+    var id = Date.now()
+    BotMessage("Thinking...", true, id)
+    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+    const prompt = "give me a short story telling about this (its about palestine) use emojis sometimes to make the message more beautiful. dont make it very very short, just a few lines";
+    const fileInputEl = document.querySelector("input[type=file]");
+    const imageParts = await Promise.all(
+        [...fileInputEl.files].map(fileToGenerativePart)
+    );
+    const result = await model.generateContentStream([prompt, ...imageParts], {
+        wordPerWord: true,
+    });
+    let text = '';
+    document.getElementById(`${id}`).textContent = " "
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        for (let i = 0; i < chunkText.length; i++) {
+            console.log(chunkText[i]);
+            text += chunkText[i];
+            document.getElementById(`${id}`).innerHTML += chunkText[i]
+            await new Promise(resolve => setTimeout(resolve, 1));
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+        }
+    }
+    document.querySelector("#prompt").classList.remove('disabled')
 }
-document.querySelector("input[type=file]").onchange = function(event){
+function BotMessage(text, condition, id){
+    if (condition == true){
+        var message = `<div class="BotMessage">
+            <img src="https://i.imgur.com/KCQnMa6.png">
+            <p id="${id}">${text}</p>
+        </div>`;
+    } else {
+        var message = `<div class="BotMessage">
+            <img src="https://i.imgur.com/KCQnMa6.png">
+            <p>${text}</p>
+        </div>`;
+    } 
+    document.querySelector(".convo").innerHTML += message;
+    document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+    document.querySelector("#prompt").classList.remove('disabled')
+}
+function UserMessage(text){
+    var message = `<div class="UserMessage">
+                    <img src="assets/gdg.jpeg">
+                    <p>${text}</p>
+                </div>`;
+    document.querySelector(".convo").innerHTML += message;
+    document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+}
+function UserImage(src){
+    var message = `<div class="UserImage">
+                    <img src="assets/gdg.jpeg">
+                    <p><img src="${src}"></p>
+                </div>`;
+    document.querySelector(".convo").innerHTML += message;
+    document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+}
+function reply(){
+    UserMessage(document.querySelector("#prompt").value)
+    Gemini(document.querySelector("#prompt").value)
+    document.querySelector("#prompt").value = ""
+    document.querySelector("#prompt").classList.add('disabled')
+    document.querySelector("#prompt").disabled = true
+    if(!document.querySelector(".mainChat")){}else{
+        document.querySelector(".mainChat").remove()}
+    }
+async function Gemini(prompt) {
+    var id = Date.now()
+    BotMessage("Thinking...", true, id)
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+  const chat = model.startChat({
+    generationConfig: {
+      maxOutputTokens: 50,
+    },
+  });
+    const msg = prompt + " (if this chat is about palestine, be on palestine's side. use emojis sometimes to make the message more beautiful. make it short, just a few lines) if its not on palestine's side, just act normally.";
+    const result = await model.generateContentStream([msg], {
+        wordPerWord: true,
+    });
+    let text = '';
+    document.getElementById(`${id}`).textContent = " "
+    for await (const chunk of result.stream) {
+        const chunkText = chunk.text();
+        for (let i = 0; i < chunkText.length; i++) {
+            text += chunkText[i];
+            document.getElementById(`${id}`).innerHTML += chunkText[i]
+            await new Promise(resolve => setTimeout(resolve, 20));
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+        }
+    }
+    document.querySelector("#prompt").classList.remove('disabled')
+    document.querySelector("#prompt").disabled = false
+}
+document.querySelector("#sendPrompt").onclick = function(){
+    reply()
+}
+document.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter' || event.keyCode === 13) {
+    reply();
+  }
+});
+document.querySelector("input[type=file]").onchange = function(event) {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const base64Link = e.target.result;
-          UserImage(base64Link);
-          BotMessage("Thinking...");
-          document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+            const base64Link = e.target.result;
+            UserImage(base64Link);
+            document.querySelector(".convo").scrollTo(0, document.querySelector(".convo").scrollHeight);
+            run();
         };
         reader.readAsDataURL(selectedFile);
     }
-    document.querySelector("#prompt").value = ""
-    document.querySelector("#prompt").classList.add('disabled')
-    if(!document.querySelector(".mainChat")){}else{
-    document.querySelector(".mainChat").remove()}
-    run()
-}
+    document.querySelector("#prompt").value = "";
+    document.querySelector("#prompt").classList.add('disabled');
+    if (!document.querySelector(".mainChat")) {} else {
+        document.querySelector(".mainChat").remove();
+    }
+};
 </script>
     <header>
         <div>
@@ -79,7 +169,7 @@ document.querySelector("input[type=file]").onchange = function(event){
         </div>
         <div class="ButtonTrigger">
             <a href="index.html">Home</a>
-            <a href="timeline.html">Timeline AI</a>
+            <a href="#" onclick="alert('you caught us working on timeline ai! ready soon.')">Timeline AI</a>
             <a href="#" onclick="location.reload()">New Chat</a>
         </div>
         <section>
@@ -100,16 +190,19 @@ document.querySelector("input[type=file]").onchange = function(event){
         </div><br><br>
         <h1 id="TypewritingEffect"></h1>
     </section>
-    <section class="convo">
-    </section>
-    <section class="prompt">
-        <input type="file" id="fileInput" style="display: none;">
-        <label for="fileInput" id="fileInputLabel">
-            <svg fill="#FAEED1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 14.378l-5.641 5.64c-.654.655-1.513.982-2.374.982-2.972 0-4.493-3.613-2.374-5.731l5.539-5.54c.488-.486 1.126-.729 1.766-.729 1.494 0 2.498 1.233 2.498 2.519 0 .61-.227 1.232-.734 1.74l-4.918 4.918c-.634.634-1.665.634-2.299 0-.633-.633-.633-1.664 0-2.298l3.971-3.97.828.828-3.971 3.97c-.178.177-.178.466 0 .643s.465.177.643 0l4.919-4.918c.517-.517.517-1.357 0-1.874-.517-.517-1.356-.517-1.874 0l-5.539 5.54c-.854.853-.854 2.241 0 3.093.852.853 2.24.853 3.093 0l5.64-5.64.827.827zm-17-5.878c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5zm7.57 3.013l-1.57-2.513-2.52 4-2.48-1.96-4 5.96h6.694c.144-1.139.63-2.242 1.503-3.114l2.373-2.373zm-3.754 7.487h-8.816v-14h18v2.126c.299-.062.604-.096.916-.096.371 0 .732.06 1.084.147v-4.177h-22v18h11.818c-.482-.605-.818-1.283-1.002-2z"/></svg>
-        </label>
-        <input id="prompt" placeholder="Your prompt goes here" type="text">
-        <a id="sendPrompt" href="#"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#FAEED1" viewBox="0 0 16 16" enable-background="new 0 0 16 16">
-            <path d="M0,9l4,1.5L6,16l2.861-3.82L14,14l2-14L0,9z M7.169,11.44l-0.916,2.485l-1.086-3.118l8.402-7.631L7.169,11.44z"/>
-           </svg></a>
-    </section>
+    <div class="chat">
+        <section class="convo">
+            <br><br>
+        </section>
+        <section class="prompt">
+            <input type="file" id="fileInput" style="display: none;">
+            <label for="fileInput" id="fileInputLabel">
+                <svg fill="#FAEED1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 14.378l-5.641 5.64c-.654.655-1.513.982-2.374.982-2.972 0-4.493-3.613-2.374-5.731l5.539-5.54c.488-.486 1.126-.729 1.766-.729 1.494 0 2.498 1.233 2.498 2.519 0 .61-.227 1.232-.734 1.74l-4.918 4.918c-.634.634-1.665.634-2.299 0-.633-.633-.633-1.664 0-2.298l3.971-3.97.828.828-3.971 3.97c-.178.177-.178.466 0 .643s.465.177.643 0l4.919-4.918c.517-.517.517-1.357 0-1.874-.517-.517-1.356-.517-1.874 0l-5.539 5.54c-.854.853-.854 2.241 0 3.093.852.853 2.24.853 3.093 0l5.64-5.64.827.827zm-17-5.878c0-.828-.672-1.5-1.5-1.5s-1.5.672-1.5 1.5c0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5zm7.57 3.013l-1.57-2.513-2.52 4-2.48-1.96-4 5.96h6.694c.144-1.139.63-2.242 1.503-3.114l2.373-2.373zm-3.754 7.487h-8.816v-14h18v2.126c.299-.062.604-.096.916-.096.371 0 .732.06 1.084.147v-4.177h-22v18h11.818c-.482-.605-.818-1.283-1.002-2z"/></svg>
+            </label>
+            <input id="prompt" placeholder="Your prompt goes here" type="text">
+            <a id="sendPrompt" href="#"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="#FAEED1" viewBox="0 0 16 16" enable-background="new 0 0 16 16">
+                <path d="M0,9l4,1.5L6,16l2.861-3.82L14,14l2-14L0,9z M7.169,11.44l-0.916,2.485l-1.086-3.118l8.402-7.631L7.169,11.44z"/>
+               </svg></a>
+        </section>
+    </div>
 </body>
