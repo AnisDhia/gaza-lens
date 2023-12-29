@@ -20,6 +20,7 @@ Gaza-Lens is an AI-powered chat bot designed to provide truthful descriptions, i
 - [ ] Make The Timeline AI fully working.
 - [ ] Make the AI remember the chat (add history to the AI)
 - [ ] Implement user authentication for personalized experiences.
+- [ ] Make an admin panel to see stats, users infos, history,....
 - [ ] Enhance image recognition capabilities to identify specific landmarks.
 - [ ] Use Llama AI API for chat.
 
